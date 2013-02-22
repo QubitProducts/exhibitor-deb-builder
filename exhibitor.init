@@ -1,0 +1,36 @@
+# Ubuntu upstart file at /etc/init/exhibitor
+
+description "Exhibitor Zookeeper Supervisor"
+
+limit nofile 32768 32768
+
+start on runlevel [2345]
+stop on [!12345]
+
+respawn
+respawn limit 2 5
+
+env CONFIG_HOME=/etc/exhibitor
+env EXHIBITOR_HOME=/usr/lib/exhibitor
+umask 007
+
+kill timeout 300
+
+setuid exhibitor
+setgid exhibitor
+
+console log
+
+script
+  . /etc/default/exhibitor
+
+    if [ "x$ENABLE" = "xyes" ]; then
+        if [ -f "/usr/bin/ec2metadata" ] ; then
+            HOSTNAME=$(ec2metadata --public-hostname)
+        else
+            HOSTNAME=$(hostname -f)
+            fi
+        cd /var/run/exhibitor/
+        exec java -Dlog4j.configuration=file:///${CONFIG_HOME}/log4j.properties -jar ${EXHIBITOR_HOME}/${EXHIBITOR_LIB} --hostname ${HOSTNAME} ${EXHIBITOR_OPTS}
+    fi
+end script

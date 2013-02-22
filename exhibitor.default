@@ -1,0 +1,6 @@
+#/etc/default/exhibitor
+
+EXHIBITOR_OPTS="--s3config bucket:file.conf -cs3 --s3credentials /etc/exhibitor/s3.properties --s3backup true --s3region eu-west-1"
+EXHIBITOR_LIB="exhibitor-build-1.4.6.jar"
+ENABLE="no"
+

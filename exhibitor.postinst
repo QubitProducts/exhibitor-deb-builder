@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -e
+
+if ! getent group | grep -q  exhibitor; then
+    groupadd -f exhibitor
+fi
+
+if ! getent passwd | grep -q exhibitor; then
+   useradd -r -d /var/run/exhibitor --shell /bin/false -g exhibitor exhibitor
+fi
+
+mkdir -p /var/run/exhibitor
+chown -R exhibitor:exhibitor /var/run/exhibitor
+chown -R exhibitor:exhibitor /var/log/exhibitor
+chown -R root:root /etc/exhibitor
+chown -R root:root /usr/lib/exhibitor
+chown root /etc/default/exhibitor
+chgrp exhibitor /etc/exhibitor/s3.properties
+chmod 640 /etc/exhibitor/s3.properties
+
