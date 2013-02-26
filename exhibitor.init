@@ -26,11 +26,12 @@ script
 
     if [ "x$ENABLE" = "xyes" ]; then
         if [ -f "/usr/bin/ec2metadata" ] ; then
-            HOSTNAME=$(ec2metadata --public-hostname)
+            OS_HOSTNAME=$(ec2metadata --public-hostname)
         else
-            HOSTNAME=$(hostname -f)
+            OS_HOSTNAME=$(hostname -f)
             fi
         cd /var/run/exhibitor/
+        HOSTNAME=${EXHIBITOR_HOSTNAME:-$OS_HOSTNAME}
         exec java -Dlog4j.configuration=file:///${CONFIG_HOME}/log4j.properties -jar ${EXHIBITOR_HOME}/${EXHIBITOR_LIB} --hostname ${HOSTNAME} ${EXHIBITOR_OPTS}
     fi
 end script
