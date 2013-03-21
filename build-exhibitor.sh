@@ -13,6 +13,8 @@ maintainer="${USER}@${hostname}"
 section="misc"
 license="Apache Software License 2.0"
 description="ZooKeeper co-process for instance monitoring, backup/recovery, cleanup and visualization."
+url="https://github.com/Netflix/exhibitor" 
+vendor="Netflix"
 
 build() {
     clean
@@ -45,14 +47,14 @@ deb() {
    version=$(echo $jarfile|awk -F "-" '{print $4}'| sed -e 's/.jar//g')
    fpm  -t deb \
         -n ${name} \
-        -v ${version}${package_version} \
+        -v ${package_version}${version} \
         --description "${description}" \
         --category ${section} \
-        --vendor "Netflix" \
+        --vendor "${vendor}" \
         --license "${license}" \
         --after-install ./exhibitor.postinst \
         --maintainer "${maintainer}" \
-        --url "https://github.com/Netflix/exhibitor" \
+        --url "${url}" \
         --prefix=/ \
         --config-files /etc/exhibitor/s3.properties \
         --config-files /etc/exhibitor/log4j.properties \
