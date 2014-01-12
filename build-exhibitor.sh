@@ -9,7 +9,7 @@ set -e -u
 
 name="exhibitor"
 package_version="-1"
-maintainer="${USER}@${hostname}"
+maintainer="${USER}@$(hostname)"
 section="misc"
 license="Apache Software License 2.0"
 description="ZooKeeper co-process for instance monitoring, backup/recovery, cleanup and visualization."
@@ -47,7 +47,7 @@ deb() {
    version=$(echo $jarfile|awk -F "-" '{print $4}'| sed -e 's/.jar//g')
    fpm  -t deb \
         -n ${name} \
-        -v ${package_version}${version} \
+        -v ${version}${package_version} \
         --description "${description}" \
         --category ${section} \
         --vendor "${vendor}" \
@@ -60,9 +60,7 @@ deb() {
         --config-files /etc/exhibitor/log4j.properties \
         --config-files /etc/default/exhibitor \
         --config-files /etc/init/exhibitor.conf \
-        -d sun-java6-jdk \
-        -d sun-java6-bin \
-        -d sun-java6-jre \
+        -d java6-runtime-headless \
         -s dir \
         -C dev/exhibitor-deb/ etc/ usr/ var/
  

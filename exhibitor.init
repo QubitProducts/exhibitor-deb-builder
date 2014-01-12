@@ -30,7 +30,7 @@ script
         else
             OS_HOSTNAME=$(hostname -f)
             fi
-        cd /var/run/exhibitor/
+        cd /var/lib/exhibitor/
         HOSTNAME=${EXHIBITOR_HOSTNAME:-$OS_HOSTNAME}
         exec java -Dlog4j.configuration=file:///${CONFIG_HOME}/log4j.properties -jar ${EXHIBITOR_HOME}/${EXHIBITOR_LIB} --hostname ${HOSTNAME} ${EXHIBITOR_OPTS}
     fi
