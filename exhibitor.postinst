@@ -7,11 +7,11 @@ if ! getent group | grep -q  exhibitor; then
 fi
 
 if ! getent passwd | grep -q exhibitor; then
-   useradd -r -d /var/run/exhibitor --shell /bin/false -g exhibitor exhibitor
+   useradd -r -d /var/lib/exhibitor --shell /bin/false -g exhibitor exhibitor
 fi
 
-mkdir -p /var/run/exhibitor
-chown -R exhibitor:exhibitor /var/run/exhibitor
+mkdir -p /var/lib/exhibitor
+chown -R exhibitor:exhibitor /var/lib/exhibitor
 chown -R exhibitor:exhibitor /var/log/exhibitor
 chown -R root:root /etc/exhibitor
 chown -R root:root /usr/lib/exhibitor
